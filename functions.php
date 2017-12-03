@@ -26,7 +26,7 @@ Source : https://github.com/Anyon3/huaweiwebapi
 				$data = '<?xml version="1.0" encoding="UTF-8"?><request><Username>'.$username.'</Username><Password>'.base64_encode($password).'</Password></request>';
 
 				$curl = curl_init();
-
+			
 								curl_setopt($curl, CURLOPT_HTTPHEADER, ['Host: '.$ip,
 																												'User-Agent: proot',
 																												'Accept: */*',
@@ -54,7 +54,6 @@ Source : https://github.com/Anyon3/huaweiwebapi
 			
 		}
 
-
 		//Get the list of SMS (Inbox)
 		function get_sms($ip, $token) {
 
@@ -62,7 +61,6 @@ Source : https://github.com/Anyon3/huaweiwebapi
 				$data = '<?xml version="1.0" encoding="UTF-8"?><request><PageIndex>1</PageIndex><ReadCount>20</ReadCount><BoxType>1</BoxType><SortType>0</SortType><Ascending>0</Ascending><UnreadPreferred>0</UnreadPreferred></request>';
 
 				$curl = curl_init();
-
 								curl_setopt($curl, CURLOPT_HTTPHEADER, ['Host: '.$ip,
 																											'User-Agent: proot',
 																											'Accept: */*',
@@ -71,19 +69,19 @@ Source : https://github.com/Anyon3/huaweiwebapi
 																											'Referer: http://'.$ip.'/html/smsinbox.html',
 																											'Content-Type: application/x-www-form-urlencoded; charset=utf-8',
 																											'__RequestVerificationToken: '.$token,
-																											'X-Requested-With: XMLHttpRequest']);			
+																											'X-Requested-With: XMLHttpRequest']);
 			 			 	 curl_setopt($curl, CURLOPT_URL, "http://$ip/api/sms/sms-list");
-
 							 curl_setopt($curl, CURLOPT_POST, 1);
 							 curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 							 curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		
 				$response = curl_exec($curl);
 										curl_close($curl);
+			
 				$result = simplexml_load_string($response);
 
 				return $result;
-		
+			
 		}
 
 		//Delete all SMS (Inbox)		
@@ -92,7 +90,6 @@ Source : https://github.com/Anyon3/huaweiwebapi
 				$data = (string)$rmxml;				 
 
 				$curl = curl_init();
-
 								curl_setopt($curl, CURLOPT_HTTPHEADER, ['Host: '.$ip,
 																											'User-Agent: proot',
 																											'Accept: */*',
@@ -103,12 +100,10 @@ Source : https://github.com/Anyon3/huaweiwebapi
 																											'__RequestVerificationToken: '.$token,
 																											'X-Requested-With: XMLHttpRequest']);			
 			 			 	 curl_setopt($curl, CURLOPT_URL, "http://$ip/api/sms/delete-sms");
-
 							 curl_setopt($curl, CURLOPT_POST, 1);
 							 curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 							 curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-
-
+			
 				$response = curl_exec($curl);
 				$result = simplexml_load_string($response);
 
